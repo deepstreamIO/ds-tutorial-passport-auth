@@ -1,0 +1,37 @@
+a {
+	padding: 20px;
+	margin: 20px;
+	border: 1px solid #ccc;
+	display: block;
+	text-decoration: none;
+	color: #fff;
+	border-radius: 5px;
+	text-align: center;
+}
+.login, .app {
+	margin: 0 auto;
+	margin-top: 200px;
+	height: 400px;
+	width: 300px;
+}
+.facebook {
+	background-color: #3B5998;
+}
+.twitter {
+	background-color: #45B0E3;
+}
+.fa {
+	margin-right: 5px;
+	font-size: 20px;
+}
+.app {
+	display: none;
+	font-size: 20px;
+	text-align: center;
+}
+.loggedin .login {
+	display: none;
+}
+.loggedin .app {
+	display: block;
+}

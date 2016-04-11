@@ -15,7 +15,7 @@
     "lodash": "^4.9.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.0",
-    "session-file-store": "^0.2.0",
+    "passport-twitter": "^1.0.4",
     "use-express-middleware": "^1.0.0"
   }
 }

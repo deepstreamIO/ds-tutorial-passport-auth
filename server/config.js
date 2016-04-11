@@ -1,7 +1,10 @@
 module.exports = {
 	HTTP_PORT: 7072,
-	HOST_NAME: process.env.HOST_NAME || '1a4e93d4.ngrok.io',
+	HOST_NAME: process.env.HOST_NAME,
 
-	FACEBOOK_ID: process.env.FACEBOOK_ID || '235659440155031',
-	FACEBOOK_SECRET: process.env.FACEBOOK_SECRET || '6972c46ef624c4df77ddcfe711ab2806'
+	FACEBOOK_ID: process.env.FACEBOOK_ID,
+	FACEBOOK_SECRET: process.env.FACEBOOK_SECRET,
+
+	TWITTER_KEY: process.env.TWITTER_KEY,
+	TWITTER_SECRET: process.env.TWITTER_KEY
 }
