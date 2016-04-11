@@ -1,33 +1,25 @@
-var Deepstream = require( 'deepstream.io' );
-var useExpressMiddleware = require( 'use-express-middleware' );
-var express = require( 'express' );
-var expressSession = require( 'express-session' );
-var passport = require( 'passport' );
-var PassportFacebook = require( 'passport-facebook' );
-var http = require( 'http' );
+var config = require( './config' );
 
 // Passport
+var passport = require( 'passport' );
+var passportFacebook = require( './passport-facebook' );
+
 var initialisedPassport = passport.initialize();
 var passportSession = passport.session();
 
-passport.use( new PassportFacebook( {
-    clientID: '235659440155031',
-    clientSecret: '6972c46ef624c4df77ddcfe711ab2806',
-    callbackURL: 'http://1a4e93d4.ngrok.io/login/facebook/return'
-  },
-  ( accessToken, refreshToken, profile, cb ) => {
-    return cb( null, profile );
-} ) );
-
-passport.serializeUser(function(user, cb) {
+passport.serializeUser( function(user, cb) {
   cb(null, user);
-});
+} );
 
-passport.deserializeUser(function(obj, cb) {
+passport.deserializeUser( function(obj, cb) {
   cb(null, obj);
-});
+} );
 
 // Express
+var http = require( 'http' );
+var express = require( 'express' );
+var expressSession = require( 'express-session' );
+
 var app = express();
 var httpServer = http.createServer(app);
 var session = expressSession({
@@ -40,43 +32,24 @@ var session = expressSession({
     maxAge: 2147483647  // Never expire
   }
 });
-var middleware = [ session, initialisedPassport, passportSession ];
 
+app.use( express.static( '../client' ) );
 app.use( session );
 app.use( initialisedPassport );
 app.use( passportSession );
-app.use( express.static( '../client' ) );
+passportFacebook( app, passport );
 
-app.get( '/login/facebook', passport.authenticate('facebook') );
-app.get( '/login/facebook/return', 
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  ( req, res ) => {
-    res.redirect('/');
-} );
 
 // Deepstream
-const deepstream = new Deepstream();
+var Deepstream = require( 'deepstream.io' );
+var PermissionHandler = require( './permission-handler' );
+
+var deepstream = new Deepstream();
 deepstream.set( 'urlPath', '/deepstream' );
 deepstream.set( 'httpServer', httpServer );
-deepstream.set( 'permissionHandler', {
-  
-  isValidUser( connectionData, authData, callback ) {
-    console.log( connectionData )
-    useExpressMiddleware( connectionData.headers, middleware, ( req, res ) => {
-      if( req.user ) {
-        callback( null, req.user.id );
-      } else {
-        callback( 'Login Denied' );
-      }
-    })
-  },
-
-  canPerformAction( id, message, callback ) {
-    callback(null, true );
-  }
-} );
+deepstream.set( 'permissionHandler', new PermissionHandler( [ session, initialisedPassport, passportSession ] ) );
 deepstream.start();
 
-httpServer.listen( 7072, function() {
-  console.log( 'HTTP server listening on 7072' );
+httpServer.listen( config.HTTP_PORT, function() {
+  console.log( 'HTTP server listening on', process.env.HTTP_PORT );
 } );
