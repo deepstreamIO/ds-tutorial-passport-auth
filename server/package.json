@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "deepstream.io": "^0.8.1",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "lodash": "^4.9.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.0",
+    "session-file-store": "^0.2.0",
+    "use-express-middleware": "^1.0.0"
+  }
+}

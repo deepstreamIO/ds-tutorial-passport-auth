@@ -1,0 +1,36 @@
+<html lang="en"><head>
+	<meta charset="UTF-8">
+	<title>facebook integration</title>
+	<script type="text/javascript" src="https://rawgit.com/deepstreamIO/deepstream.io-client-js/master/dist/deepstream.min.js"></script>
+</head>
+
+<body>
+	<div class="status">
+		Not Logged In
+	</div>
+
+	<script>
+	var ds = deepstream( '1a4e93d4.ngrok.io/', {
+        path: '/deepstream',
+        cookie: 'sid',
+        cookiePath: 'sid'
+    } );
+
+	function login() {
+		ds.login( {}, function( success, errorEvent, errorMessage ) {
+			if( success ) {
+				console.log( 'Logged in' );
+			} else {
+				console.log( 'Failed to login.' );
+			}		
+		} );
+
+		ds.on( 'error', function( error ) {
+			console.log( 'An error occured', error );
+		} );
+	}
+	login();
+	</script>
+</body>
+
+</html>
