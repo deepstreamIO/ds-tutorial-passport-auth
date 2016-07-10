@@ -6,5 +6,5 @@ module.exports = {
 	FACEBOOK_SECRET: process.env.FACEBOOK_SECRET,
 
 	TWITTER_KEY: process.env.TWITTER_KEY,
-	TWITTER_SECRET: process.env.TWITTER_KEY
+	TWITTER_SECRET: process.env.TWITTER_SECRET
 }

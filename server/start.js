@@ -1,5 +1,6 @@
 var config = require( './config' );
 
+console.log( config )
 /**
 * Configure Passport
 */
@@ -10,12 +11,12 @@ var passportTwitter = require( './passport-twitter' );
 var initialisedPassport = passport.initialize();
 var passportSession = passport.session();
 
-passport.serializeUser( function(user, cb) {
-  cb(null, user);
+passport.serializeUser( ( user, cb ) => {
+	cb(null, user);
 } );
 
-passport.deserializeUser( function(obj, cb) {
-  cb(null, obj);
+passport.deserializeUser( ( obj, cb ) => {
+	cb(null, obj);
 } );
 
 /**
@@ -26,21 +27,25 @@ var express = require( 'express' );
 var expressSession = require( 'express-session' );
 
 var app = express();
-var httpServer = http.createServer(app);
-var session = expressSession({
+var httpServer = http.createServer( app );
+var session = expressSession( {
   secret: '60dd06aa-cf8e-4cf8-8925-6de720015ebf',
   resave: false,
   saveUninitialized: false,
   name: 'sid'
-});
+} );
 
 app.use( express.static( '../client' ) );
 app.use( session );
 app.use( initialisedPassport );
 app.use( passportSession );
-passportFacebook( app, passport );
+//passportFacebook( app, passport );
 passportTwitter( app, passport );
 
+app.get( '/logout' , ( req, res ) => {
+	req.logout();
+	res.redirect('/');
+} );
 
 /**
 * Configure Deepstream
@@ -54,6 +59,6 @@ deepstream.set( 'httpServer', httpServer );
 deepstream.set( 'permissionHandler', new PermissionHandler( [ session, initialisedPassport, passportSession ] ) );
 deepstream.start();
 
-httpServer.listen( config.HTTP_PORT, function() {
+httpServer.listen( config.HTTP_PORT, () => {
   console.log( 'HTTP server listening on', process.env.HTTP_PORT );
 } );

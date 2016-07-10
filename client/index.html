@@ -1,6 +1,6 @@
 <html lang="en"><head>
 	<meta charset="UTF-8">
-	<title>facebook integration</title>
+	<title>facebook/twitter integration</title>
 	<link rel="stylesheet" href="app.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 	<script type="text/javascript" src="https://rawgit.com/deepstreamIO/deepstream.io-client-js/master/dist/deepstream.min.js"></script>
@@ -25,10 +25,15 @@
 
 	<div class="app">
 		Login Success<br/><br/>Application Started!
+
+		<a href="/logout" class="logout">
+	    	<i class="fa fa-twitter"></i>
+	    	<span>Logout</span>
+	    </a>
 	</div>
 
 	<script>
-	var ds = deepstream( '6ea3599b.ngrok.io', {
+	var ds = deepstream( 'cdcf3d94.ngrok.io', {
         path: '/deepstream',
         cookie: 'sid',
         cookiePath: 'sid'
@@ -48,6 +53,7 @@
 			console.log( 'An error occured', error );
 		} );
 	}
+	
 	login();
 	</script>
 </body>

@@ -11,13 +11,11 @@ function enablePassportTwitter( app, passport ) {
 			return cb( null, profile );
 	} ) );
 
-	app.get('/login/twitter',
-		passport.authenticate('twitter')
-	);
+	app.get('/login/twitter', passport.authenticate('twitter') );
 
 	app.get('/login/twitter/return', 
-		passport.authenticate('twitter', { failureRedirect: '/login' }),
-		function(req, res) {
+		passport.authenticate('twitter', { failureRedirect: '/login' } ),
+		( req, res ) => {
 			res.redirect('/');
 		}
 	);
