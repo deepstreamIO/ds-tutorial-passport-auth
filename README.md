@@ -1,4 +1,7 @@
 # ds-tutorial-passport-auth
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/deepstreamIO/ds-tutorial-passport-auth.svg)](https://greenkeeper.io/)
+
 A basic example on how to integrate facebook auth using the amazing passport.js library and use-express-middleware
 
 Steps:
